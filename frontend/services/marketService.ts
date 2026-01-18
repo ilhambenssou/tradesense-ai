@@ -11,7 +11,7 @@ export class MarketService {
   static async fetchRealPrice(symbol: string): Promise<MarketPrice> {
     try {
       // Préférence: Backend Flask unifié (garantit égalité prix affiché/exécuté)
-      const backend = `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/api/price/${symbol}`;
+      const backend = `http://127.0.0.1:5000/api/price/${symbol}`;
       const beRes = await fetch(backend);
       if (beRes.ok) {
         const beJson = await beRes.json();
