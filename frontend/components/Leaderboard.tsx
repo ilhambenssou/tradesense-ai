@@ -43,14 +43,14 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ language }) => {
         setLoading(true);
 
         // Fetch leaderboard
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/api/leaderboard`);
+        const response = await fetch('http://127.0.0.1:5000/api/leaderboard');
         if (response.ok) {
           const data = await response.json();
           setTraders(data);
         }
 
         // Fetch stats
-        const statsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/api/leaderboard/stats`);
+        const statsResponse = await fetch('http://127.0.0.1:5000/api/leaderboard/stats');
         if (statsResponse.ok) {
           const statsData = await statsResponse.json();
           setStats(statsData);
@@ -152,12 +152,12 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ language }) => {
               <div className="flex items-center gap-6">
                 {/* Rank Badge */}
                 <div className={`flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center font-black text-xl ${trader.rank === 1
-                  ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30'
-                  : trader.rank === 2
-                    ? 'bg-gradient-to-br from-zinc-400 to-zinc-500 text-white shadow-lg shadow-zinc-400/30'
-                    : trader.rank === 3
-                      ? 'bg-gradient-to-br from-amber-700 to-amber-800 text-white shadow-lg shadow-amber-700/30'
-                      : 'dark:bg-zinc-800 bg-zinc-200 dark:text-zinc-400 text-zinc-600'
+                    ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30'
+                    : trader.rank === 2
+                      ? 'bg-gradient-to-br from-zinc-400 to-zinc-500 text-white shadow-lg shadow-zinc-400/30'
+                      : trader.rank === 3
+                        ? 'bg-gradient-to-br from-amber-700 to-amber-800 text-white shadow-lg shadow-amber-700/30'
+                        : 'dark:bg-zinc-800 bg-zinc-200 dark:text-zinc-400 text-zinc-600'
                   }`}>
                   {isPodium ? getPodiumIcon(trader.rank) : trader.rank}
                 </div>
