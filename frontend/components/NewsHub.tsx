@@ -46,8 +46,8 @@ const NewsHub: React.FC<NewsHubProps> = ({ language }) => {
       setError(null);
 
       const url = selectedCategory === 'Tous'
-        ? 'http://127.0.0.1:5000/api/news'
-        : `http://127.0.0.1:5000/api/news?category=${encodeURIComponent(selectedCategory)}`;
+        ? `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/api/news`
+        : `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/api/news?category=${encodeURIComponent(selectedCategory)}`;
 
       const response = await fetch(url);
       const data = await response.json();
@@ -132,8 +132,8 @@ const NewsHub: React.FC<NewsHubProps> = ({ language }) => {
             key={cat}
             onClick={() => setSelectedCategory(cat)}
             className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap ${selectedCategory === cat
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'dark:bg-white/5 bg-black/5 dark:text-zinc-400 text-zinc-600 hover:bg-indigo-600/10 hover:text-indigo-500'
+              ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
+              : 'dark:bg-white/5 bg-black/5 dark:text-zinc-400 text-zinc-600 hover:bg-indigo-600/10 hover:text-indigo-500'
               }`}
           >
             {cat}
