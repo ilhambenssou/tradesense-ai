@@ -66,7 +66,7 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
   useEffect(() => {
     const fetchMarketData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/api/price/${symbol}`);
+        const response = await fetch(`https://tradesense-ai-production-58e6.up.railway.app/api/price/${symbol}`);
         if (response.ok) {
           const data = await response.json();
           setPriceHistory(prev => [...prev, data.price].slice(-100));
@@ -87,7 +87,7 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
       if (priceHistory.length < 20) return;
 
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/ai/analysis', {
+        const response = await fetch('https://tradesense-ai-production-58e6.up.railway.app/api/ai/analysis', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prices: priceHistory, symbol })
@@ -130,7 +130,7 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/ai/chat', {
+      const response = await fetch('https://tradesense-ai-production-58e6.up.railway.app/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -188,8 +188,8 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
               key={level}
               onClick={() => setExpertiseLevel(level)}
               className={`px-4 py-2 rounded-lg text-xs font-black uppercase transition-all ${expertiseLevel === level
-                  ? 'bg-indigo-600 text-white'
-                  : 'dark:text-zinc-500 text-zinc-600 hover:text-indigo-500'
+                ? 'bg-indigo-600 text-white'
+                : 'dark:text-zinc-500 text-zinc-600 hover:text-indigo-500'
                 }`}
             >
               {level === 'beginner' ? '🌱 Débutant' : level === 'intermediate' ? '📊 Inter' : '🎓 Expert'}
@@ -221,7 +221,7 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
                 )}
                 <div>
                   <p className={`text-3xl font-black ${marketContext.signal_type === 'BUY' ? 'text-emerald-500' :
-                      marketContext.signal_type === 'SELL' ? 'text-rose-500' : 'text-zinc-500'
+                    marketContext.signal_type === 'SELL' ? 'text-rose-500' : 'text-zinc-500'
                     }`}>
                     {marketContext.signal_type}
                   </p>
@@ -299,8 +299,8 @@ const AIConsultant: React.FC<AIConsultantProps> = ({ symbol, language }) => {
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] ${msg.type === 'user'
-                      ? 'bg-indigo-600 text-white'
-                      : 'dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900'
+                    ? 'bg-indigo-600 text-white'
+                    : 'dark:bg-zinc-800 bg-zinc-200 dark:text-white text-zinc-900'
                     } p-4 rounded-2xl`}>
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                     <p className="text-[10px] opacity-60 mt-2">{msg.timestamp}</p>
