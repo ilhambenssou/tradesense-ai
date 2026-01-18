@@ -159,7 +159,7 @@ const Dashboard: React.FC<DashboardProps> = ({ challenge, onPaymentSuccess, onUp
                   const { mockProcessPayment } = await import('../services/mockPayment');
                   const updated = await mockProcessPayment(challenge);
                   try {
-                    await fetch('http://127.0.0.1:5000/api/challenges/register', {
+                    await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/challenges/create`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify(updated)
@@ -184,7 +184,7 @@ const Dashboard: React.FC<DashboardProps> = ({ challenge, onPaymentSuccess, onUp
                   const { mockProcessPayment } = await import('../services/mockPayment');
                   const updated = await mockProcessPayment(challenge);
                   try {
-                    await fetch('http://127.0.0.1:5000/api/challenges/register', {
+                    await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/challenges/create`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify(updated)
@@ -208,13 +208,13 @@ const Dashboard: React.FC<DashboardProps> = ({ challenge, onPaymentSuccess, onUp
                 setPayLoading(true);
                 // ... (simplified for brevity, keeping original logic blocks is safer)
                 try {
-                  const cfgRes = await fetch('http://127.0.0.1:5000/api/admin/config');
+                  const cfgRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/admin/config`);
                   const cfg = cfgRes.ok ? await cfgRes.json() : {};
                   if (!cfg.paypal_enabled) {
                     const { mockProcessPayment } = await import('../services/mockPayment');
                     const updated = await mockProcessPayment(challenge);
                     try {
-                      await fetch('http://127.0.0.1:5000/api/challenges/register', {
+                      await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/challenges/create`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(updated)
@@ -223,7 +223,7 @@ const Dashboard: React.FC<DashboardProps> = ({ challenge, onPaymentSuccess, onUp
                     onPaymentSuccess();
                   } else {
                     // Real paypal flow
-                    const create = await fetch('http://127.0.0.1:5000/api/payments/paypal/create-order', { method: 'POST' });
+                    const create = await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/payments/paypal/create-order`, { method: 'POST' });
                     const cjson = await create.json();
                     // ...
                     const { mockProcessPayment } = await import('../services/mockPayment');
