@@ -79,7 +79,7 @@ const Pricing: React.FC = () => {
         const user = JSON.parse(userStr);
 
         try {
-            const response = await fetch('http://localhost:5000/api/challenges/create', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://tradesense-ai-production-58e6.up.railway.app'}/api/challenges/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -278,3 +278,4 @@ const Pricing: React.FC = () => {
 };
 
 export default Pricing;
+
