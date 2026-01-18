@@ -25,7 +25,7 @@ export class MarketService {
           };
         }
       }
-      
+
       // Fallback: Yahoo V8 direct
       const response = await fetch(`${this.API_BASE}${symbol}?interval=1m&range=1d`);
       const json = await response.json();
@@ -51,13 +51,13 @@ export class MarketService {
    */
   static calculateSignal(prices: number[]): { type: 'BUY' | 'SELL' | 'HOLD'; reason: string } {
     if (prices.length < 20) return { type: 'HOLD', reason: 'Analyzing market depth...' };
-    
+
     const sma5 = prices.slice(-5).reduce((a, b) => a + b, 0) / 5;
     const sma20 = prices.slice(-20).reduce((a, b) => a + b, 0) / 20;
 
     if (sma5 > sma20 * 1.0005) return { type: 'BUY', reason: 'Bullish momentum (SMA5 > SMA20)' };
     if (sma5 < sma20 * 0.9995) return { type: 'SELL', reason: 'Bearish pressure (SMA5 < SMA20)' };
-    
+
     return { type: 'HOLD', reason: 'Market consolidation' };
   }
 }
