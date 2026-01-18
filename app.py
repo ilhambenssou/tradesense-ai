@@ -1,4 +1,6 @@
+
 from flask import Flask, request, make_response
+from flask_cors import CORS
 import sqlite3
 import os
 from backend.config import Config, ProductionConfig
@@ -39,6 +41,7 @@ def create_app():
     init_db()
     
     app = Flask(__name__)
+    CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     
     # 1. Configuration Globale
     app.config.from_object(ProductionConfig)
@@ -56,22 +59,6 @@ def create_app():
     
     app.challenges_db = challenges_db
     app.challenge_locks = challenge_locks
-    
-    @app.before_request
-    def handle_options():
-        if request.method == 'OPTIONS':
-            response = make_response()
-            response.headers['Access-Control-Allow-Origin'] = '*'
-            response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
-            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Admin-Token'
-            return response, 200
-
-    @app.after_request
-    def add_cors_headers(response):
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Admin-Token'
-        return response
     
     @app.route("/health", methods=["GET"])
     def health():
